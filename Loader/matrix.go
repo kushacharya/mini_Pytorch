@@ -11,18 +11,18 @@ import (
 func GetUserMatrix(name string) ([][]float64, error) {
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Printf("Enter the number of Rows of Matrix for Tensor %s :", name)
+	fmt.Printf("Enter the number of Rows of Matrix for Tensor %s: ", name)
 	rowStr, _ := reader.ReadString('\n')
 	rows, err := strconv.Atoi(strings.TrimSpace(rowStr))
 	if err != nil {
 		return nil, fmt.Errorf("invalid Row input: %v", err)
 	}
 
-	fmt.Printf("Enter the number of the columns in tensotr: %s", name)
+	fmt.Printf("Enter the number of the columns in tensotr: %s ", name)
 	colStr, _ := reader.ReadString('\n')
 	cols, err := strconv.Atoi(strings.TrimSpace(colStr))
 	if err != nil {
-		return nil, fmt.Errorf("invalid column input: %v", err)
+		return nil, fmt.Errorf("invalid column input: %v ", err)
 	}
 
 	matrix := make([][]float64, rows)
@@ -39,7 +39,7 @@ func GetUserMatrix(name string) ([][]float64, error) {
 		for j, tok := range tokens {
 			val, err := strconv.ParseFloat(tok, 64)
 			if err != nil {
-				return nil, fmt.Errorf("invalid number at row %d col %d: %v", i+1, j+1, err)
+				return nil, fmt.Errorf("invalid number at row %d col %d: %v ", i+1, j+1, err)
 			}
 			row[j] = val
 		}
