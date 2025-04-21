@@ -18,7 +18,7 @@ func GetUserMatrix(name string) ([][]float64, error) {
 		return nil, fmt.Errorf("invalid Row input: %v", err)
 	}
 
-	fmt.Printf("Enter the number of the columns in tensotr: %s ", name)
+	fmt.Printf("Enter the number of the columns in tensor %s: ", name)
 	colStr, _ := reader.ReadString('\n')
 	cols, err := strconv.Atoi(strings.TrimSpace(colStr))
 	if err != nil {

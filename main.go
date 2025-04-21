@@ -15,7 +15,7 @@ func main() {
 	}
 	bData, err := Loader.GetUserMatrix("B")
 	if err != nil {
-		log.Fatalf("Error getting tensot B : %v", err)
+		log.Fatalf("Error getting tensor B : %v", err)
 	}
 	// here it is returning two things: 1. a and 2. err
 	a, err := Tensor.NewTensor(aData)
@@ -38,11 +38,35 @@ func main() {
 	fmt.Println("Tensor B:")
 	b.Print()
 
-	result, err := a.MatMul(b)
+	matmulCheck, err := a.MatMul(b)
 	if err != nil {
 		log.Fatalf("error in matrix multiplication : %v", err)
 	}
 
 	fmt.Println("Result of the matrix multiplication : ")
-	result.Print()
+	matmulCheck.Print()
+
+	add, err := a.Add(b)
+	if err != nil {
+		log.Fatalf("error in addition of matrix : %v", err)
+	}
+
+	fmt.Println("Result of the matrix addition : ")
+	add.Print()
+
+	sub, err := a.Sub(b)
+	if err != nil {
+		log.Fatalf("error in subtraction of matrix : %v", err)
+	}
+
+	fmt.Println("Result of the matrix subtraction : ")
+	sub.Print()
+
+	mul, err := a.Multiply(b)
+	if err != nil {
+		log.Fatalf("error in multiply (Element wise) of matrix : %v", err)
+	}
+
+	fmt.Println("Result of the matrix multiplication : ")
+	mul.Print()
 }
