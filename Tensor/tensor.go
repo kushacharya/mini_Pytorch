@@ -34,6 +34,7 @@ func NewTensor(data [][]float64) (*Tensor, error) { // pointer to the Tensor and
 	}, nil
 }
 
+// Shape created the shape finc that will give num of rows and cols for the matrix
 func (t *Tensor) Shape() (int, int, error) {
 	if t == nil || t.Data == nil {
 		return 0, 0, errors.New("tensor is nil or uninitialized")
@@ -47,6 +48,23 @@ func (t *Tensor) Shape() (int, int, error) {
 	}
 
 	return t.Rows, t.Cols, nil
+}
+
+// Clone creating the deep copy of the matrix
+func (t *Tensor) Clone() (*Tensor, error) {
+	if t == nil || t.Data == nil {
+		return nil, errors.New("given tensor for clone is empty")
+	}
+
+	clone := make([][]float64, t.Rows)
+	for i := 0; i < t.Rows; i++ {
+		clone[i] = make([]float64, t.Cols)
+		for j := 0; j < t.Cols; j++ {
+			clone[i][j] = t.Data[i][j]
+		}
+	}
+
+	return NewTensor(clone)
 }
 
 func (t *Tensor) Print() {
