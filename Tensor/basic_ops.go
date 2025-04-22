@@ -1,6 +1,9 @@
 package Tensor
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 func (a *Tensor) Add(b *Tensor) (*Tensor, error) {
 	if a.Rows != b.Rows || a.Cols != b.Cols {
@@ -48,19 +51,28 @@ func (a *Tensor) Multiply(b *Tensor) (*Tensor, error) {
 	return NewTensor(result)
 }
 
-func (a *Tensor) AddScalar(scalar float64) *Tensor {
+func (a *Tensor) AddScalar() (*Tensor, error) {
+	var Scalar float64
+	fmt.Println("Enter a value you want to add in matrix")
+	_, err := fmt.Scan(&Scalar)
+	if err != nil {
+		return nil, fmt.Errorf("error in taking value from user: %v", err)
+	}
 	result := make([][]float64, a.Rows)
 	for i := 0; i < a.Rows; i++ {
 		result[i] = make([]float64, a.Cols)
 		for j := 0; j < a.Cols; j++ {
-			result[i][j] = a.Data[i][j] + scalar
+			result[i][j] = a.Data[i][j] + Scalar
 		}
 	}
-	t, _ := NewTensor(result)
-	return t
+	t, err := NewTensor(result)
+	if err != nil {
+		return nil, fmt.Errorf("error in adding the scalar value to the matrix: %v", err)
+	}
+	return t, nil
 }
 
-func (a *Tensor) Transpose() *Tensor {
+func (a *Tensor) Transpose() (*Tensor, error) {
 	result := make([][]float64, a.Cols)
 	for i := 0; i < a.Cols; i++ {
 		result[i] = make([]float64, a.Rows)
@@ -68,6 +80,9 @@ func (a *Tensor) Transpose() *Tensor {
 			result[i][j] = a.Data[j][i]
 		}
 	}
-	t, _ := NewTensor(result)
-	return t
+	t, err := NewTensor(result)
+	if err != nil {
+		return nil, fmt.Errorf("error during the transposing of matrix : %v", err)
+	}
+	return t, nil
 }

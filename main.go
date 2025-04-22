@@ -70,7 +70,17 @@ func main() {
 	fmt.Println("Result of the matrix multiplication : ")
 	mul.Print()
 
-	trans := a.Transpose()
+	addS, err := a.AddScalar()
+	if err != nil {
+		log.Fatalf("error in the AddScalar function: %v", err)
+	}
+	fmt.Println("Result after adding the scalar value")
+	addS.Print()
+
+	trans, err := a.Transpose()
+	if err != nil {
+		log.Fatalf("error in tansposing the matrix: %v", err)
+	}
 	fmt.Println("Result of transpose matrix")
 	trans.Print()
 }
