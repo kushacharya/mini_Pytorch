@@ -59,3 +59,15 @@ func (a *Tensor) AddScalar(scalar float64) *Tensor {
 	t, _ := NewTensor(result)
 	return t
 }
+
+func (a *Tensor) Transpose() *Tensor {
+	result := make([][]float64, a.Cols)
+	for i := 0; i < a.Cols; i++ {
+		result[i] = make([]float64, a.Rows)
+		for j := 0; j < a.Rows; j++ {
+			result[i][j] = a.Data[j][i]
+		}
+	}
+	t, _ := NewTensor(result)
+	return t
+}

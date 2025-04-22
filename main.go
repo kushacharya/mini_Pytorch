@@ -69,4 +69,8 @@ func main() {
 
 	fmt.Println("Result of the matrix multiplication : ")
 	mul.Print()
+
+	trans := a.Transpose()
+	fmt.Println("Result of transpose matrix")
+	trans.Print()
 }
