@@ -83,4 +83,10 @@ func main() {
 	}
 	fmt.Println("Result of transpose matrix")
 	trans.Print()
+
+	rows, cols, err := a.Shape()
+	if err != nil {
+		log.Fatalf("error: %v", err)
+	}
+	fmt.Printf("Shape of matrix  Rows :%d , Cols: %d", rows, cols)
 }

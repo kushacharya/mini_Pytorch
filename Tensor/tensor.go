@@ -34,6 +34,21 @@ func NewTensor(data [][]float64) (*Tensor, error) { // pointer to the Tensor and
 	}, nil
 }
 
+func (t *Tensor) Shape() (int, int, error) {
+	if t == nil || t.Data == nil {
+		return 0, 0, errors.New("tensor is nil or uninitialized")
+	}
+
+	expectedCols := len(t.Data[0])
+	for i := 0; i < len(t.Data); i++ {
+		if len(t.Data[i]) != expectedCols {
+			return 0, 0, errors.New("inconsistent Row or Column")
+		}
+	}
+
+	return t.Rows, t.Cols, nil
+}
+
 func (t *Tensor) Print() {
 	for _, rows := range t.Data {
 		fmt.Println(rows)
