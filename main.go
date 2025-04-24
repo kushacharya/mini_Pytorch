@@ -89,4 +89,10 @@ func main() {
 		log.Fatalf("error: %v", err)
 	}
 	fmt.Printf("Shape of matrix  Rows :%d , Cols: %d", rows, cols)
+
+	random, err := Tensor.Random(4, 4)
+	if err != nil {
+		log.Fatalf("error in generatting the random matrix %v", err)
+	}
+	random.Print()
 }
