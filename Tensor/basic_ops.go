@@ -51,13 +51,8 @@ func (a *Tensor) Multiply(b *Tensor) (*Tensor, error) {
 	return NewTensor(result)
 }
 
-func (a *Tensor) AddScalar() (*Tensor, error) {
-	var Scalar float64
-	fmt.Println("Enter a value you want to add in matrix")
-	_, err := fmt.Scan(&Scalar)
-	if err != nil {
-		return nil, fmt.Errorf("error in taking value from user: %v", err)
-	}
+func (a *Tensor) AddScalar(Scalar float64) (*Tensor, error) {
+	//var Scalar float64
 	result := make([][]float64, a.Rows)
 	for i := 0; i < a.Rows; i++ {
 		result[i] = make([]float64, a.Cols)
