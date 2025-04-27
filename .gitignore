@@ -11,12 +11,6 @@
 /build/
 /dist/
 
-# Vendor directory (if you're not using Go modules)
-/vendor/
-
-# Dependency directories (remove if using Go modules)
-Godeps/
-
 # IDE/editor junk
 .idea/
 .vscode/
@@ -37,3 +31,5 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+mini_pytorch

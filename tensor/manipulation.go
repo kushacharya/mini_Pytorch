@@ -1,4 +1,4 @@
-package Tensor
+package tensor
 
 import (
 	"errors"

@@ -1,4 +1,4 @@
-package Loader
+package loader
 
 import (
 	"bufio"
