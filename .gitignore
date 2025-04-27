@@ -1,0 +1,39 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Output of `go build`
+/bin/
+/build/
+/dist/
+
+# Vendor directory (if you're not using Go modules)
+/vendor/
+
+# Dependency directories (remove if using Go modules)
+Godeps/
+
+# IDE/editor junk
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Coverage reports
+*.out
+*.coverprofile
+
+# Temporary files
+*.tmp
+*.temp
