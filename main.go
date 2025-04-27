@@ -1,31 +1,31 @@
 package main
 
 import (
-	"Github_campaign/Loader"
-	"Github_campaign/Tensor"
 	"fmt"
 	"log"
+	"mini_pytorch/loader"
+	"mini_pytorch/tensor"
 )
 
 func main() {
 	// I have created a simple Tensor 2D slice here
-	aData, err := Loader.GetUserMatrix("A")
+	aData, err := loader.GetUserMatrix("A")
 	if err != nil {
 		log.Fatalf("Error getting ternsor A : %v", err)
 	}
-	bData, err := Loader.GetUserMatrix("B")
+	bData, err := loader.GetUserMatrix("B")
 	if err != nil {
 		log.Fatalf("Error getting tensor B : %v", err)
 	}
 	// here it is returning two things: 1. a and 2. err
-	a, err := Tensor.NewTensor(aData)
+	a, err := tensor.NewTensor(aData)
 	// I am checking here that whether the error occurred or not
 	if err != nil {
 		fmt.Println("Error creating Tensor A", err)
 		return
 	}
 
-	b, err := Tensor.NewTensor(bData)
+	b, err := tensor.NewTensor(bData)
 	if err != nil {
 		fmt.Println("Error creating Tensor B", err)
 		return
@@ -70,7 +70,8 @@ func main() {
 	fmt.Println("Result of the matrix multiplication : ")
 	mul.Print()
 
-	addS, err := a.AddScalar()
+	// TODO: Hardcoded value
+	addS, err := a.AddScalar(5.0)
 	if err != nil {
 		log.Fatalf("error in the AddScalar function: %v", err)
 	}
@@ -90,7 +91,7 @@ func main() {
 	}
 	fmt.Printf("Shape of matrix  Rows :%d , Cols: %d", rows, cols)
 
-	random, err := Tensor.Random(4, 4)
+	random, err := tensor.Random(4, 4)
 	if err != nil {
 		log.Fatalf("error in generatting the random matrix %v", err)
 	}
