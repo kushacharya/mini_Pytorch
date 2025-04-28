@@ -33,4 +33,40 @@ func (t *Tensor) Reshape(row, col int) (*Tensor, error) {
 	return NewTensor(result)
 }
 
-//func (t *Tensor) ExpandDims()
+func (t *Tensor) ExpandDims(axis int) (*Tensor, error) {
+	if t == nil || t.Data == nil {
+		return nil, errors.New("can not do Expand Dimension for uninitialized tensor")
+	}
+
+	if axis < 0 || axis > 2 {
+		return nil, errors.New("invalid axis")
+	}
+
+	switch axis {
+	case 0:
+		newData := make([][]float64, 1)
+		for i := range t.Data {
+			newData = append(newData, t.Data[i])
+		}
+		return NewTensor(newData)
+	case 1:
+		newData := make([][]float64, t.Rows)
+		for i := 0; i < t.Rows; i++ {
+			newData[i] = make([]float64, 1*t.Rows)
+			copy(newData[i], t.Data[i])
+		}
+		return NewTensor(newData)
+	case 2:
+		newData := make([][]float64, t.Rows)
+		for i := 0; i < t.Rows; i++ {
+			newData[i] = make([]float64, t.Cols)
+			for j := 0; j < t.Cols; j++ {
+				newData[i][j] = t.Data[i][j]
+			}
+		}
+		return NewTensor(newData)
+	}
+
+	return nil, errors.New("expected error")
+
+}
