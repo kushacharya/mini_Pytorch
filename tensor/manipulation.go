@@ -70,3 +70,29 @@ func (t *Tensor) ExpandDims(axis int) (*Tensor, error) {
 	return nil, errors.New("expected error")
 
 }
+
+func (t *Tensor) Squeeze(axis int) (*Tensor, error) {
+	if t == nil || t.Data == nil {
+		return nil, errors.New("can not squeeze the matrix that is uninitialized")
+	}
+	switch axis {
+	case 0:
+		if t.Rows == 1 {
+			return NewTensor([][]float64{t.Data[0]})
+		} else {
+			return nil, errors.New("can not squeeze axis 0, size is not 1")
+		}
+	case 1:
+		if t.Cols == 1 {
+			flatten := make([][]float64, t.Rows)
+			for i := 0; i < t.Rows; i++ {
+				flatten[i] = []float64{t.Data[i][0]}
+			}
+			return NewTensor(flatten)
+		} else {
+			return nil, errors.New("can not squeeze axis 1, size is not 1")
+		}
+	default:
+		return nil, errors.New("axis out of range")
+	}
+}
