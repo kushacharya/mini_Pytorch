@@ -47,3 +47,38 @@ func (a *Tensor) Concat(b *Tensor, axis int) (*Tensor, error) {
 		return nil, errors.New("unexpected error occurred while concatenation")
 	}
 }
+
+func (a *Tensor) Stack(b *Tensor, axis int) (interface{}, error) {
+	if a == nil || a.Data == nil || b == nil || b.Data == nil {
+		return nil, errors.New("both tensors should be initialized")
+	}
+
+	if a.Rows != b.Rows || a.Cols != b.Cols {
+		return nil, errors.New("matrix is not compatible for the Stack operation")
+	}
+
+	if axis < 0 || axis > 2 {
+		return nil, errors.New("axis must be between 0, 1 and 2")
+	}
+
+	switch axis {
+	case 0:
+		result := make([][][]float64, 2)
+		result[0] = a.Data
+		result[1] = b.Data
+		return result, nil
+	case 1:
+		result := make([][][]float64, a.Rows)
+		for i := 0; i < a.Rows; i++ {
+			result[i] = make([][]float64, a.Cols)
+			for j := 0; j < a.Cols; j++ {
+				result[i][j] = make([]float64, 2)
+				result[i][j][0] = a.Data[i][j]
+				result[i][j][1] = b.Data[i][j]
+			}
+		}
+		return result, nil
+	default:
+		return nil, errors.New("unexpected axis")
+	}
+}
