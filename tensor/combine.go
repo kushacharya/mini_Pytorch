@@ -82,3 +82,47 @@ func (a *Tensor) Stack(b *Tensor, axis int) (interface{}, error) {
 		return nil, errors.New("unexpected axis")
 	}
 }
+
+func (t *Tensor) Split(axis int, parts int) ([]*Tensor, error) {
+	if t == nil || t.Data == nil {
+		return nil, errors.New("tensor is nil")
+	}
+
+	if axis == 0 {
+		if t.Rows%parts != 0 {
+			return nil, errors.New("rows cannot be evenly split")
+		}
+		step := t.Rows / parts
+		result := make([]*Tensor, parts)
+
+		for i := 0; i < parts; i++ {
+			chunk := make([][]float64, step)
+			for j := 0; j < step; j++ {
+				chunk[j] = make([]float64, t.Cols)
+				copy(chunk[j], t.Data[i*step+j])
+			}
+			result[i] = &Tensor{Data: chunk, Rows: step, Cols: t.Cols}
+		}
+		return result, nil
+
+	} else if axis == 1 {
+		if t.Cols%parts != 0 {
+			return nil, errors.New("columns cannot be evenly split")
+		}
+		step := t.Cols / parts
+		result := make([]*Tensor, parts)
+
+		for i := 0; i < parts; i++ {
+			chunk := make([][]float64, t.Rows)
+			for j := 0; j < t.Rows; j++ {
+				chunk[j] = make([]float64, step)
+				copy(chunk[j], t.Data[j][i*step:(i+1)*step])
+			}
+			result[i] = &Tensor{Data: chunk, Rows: t.Rows, Cols: step}
+		}
+		return result, nil
+
+	} else {
+		return nil, errors.New("invalid axis; use 0 (rows) or 1 (cols)")
+	}
+}
