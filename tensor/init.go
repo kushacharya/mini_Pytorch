@@ -2,6 +2,7 @@ package tensor
 
 import (
 	"errors"
+	"math"
 	"math/rand"
 	"time"
 )
@@ -70,5 +71,23 @@ func RandomInRange(rows, cols int, min, max float64) (*Tensor, error) {
 		}
 	}
 
+	return NewTensor(result)
+}
+
+func RandomNormal(row, col int, mean, sd float64) (*Tensor, error) {
+	if row <= 0 || col <= 0 {
+		return nil, errors.New("rows or columns can not be 0")
+	}
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	result := make([][]float64, row)
+	for i := 0; i < row; i++ {
+		result[i] = make([]float64, col)
+		for j := 0; j < col; j++ {
+			u1 := r.Float64()
+			u2 := r.Float64()
+			z := math.Sqrt(-2.0*math.Log(u1)) * math.Cos(2*math.Pi*u2)
+			result[i][j] = z*sd + mean
+		}
+	}
 	return NewTensor(result)
 }
