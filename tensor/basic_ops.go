@@ -81,3 +81,31 @@ func (a *Tensor) Transpose() (*Tensor, error) {
 	}
 	return t, nil
 }
+
+func (a *Tensor) Dot(b *Tensor) (*Tensor, error) {
+	if a == nil || a.Data == nil {
+		return nil, errors.New("first matrix is null")
+	}
+
+	if b == nil || b.Data == nil {
+		return nil, errors.New("second matrix is null")
+	}
+
+	if a.Cols != b.Rows {
+		return nil, errors.New("matrices are not compatible for the dot product")
+	}
+
+	result := make([][]float64, a.Rows)
+	for i := 0; i < a.Rows; i++ {
+		result[i] = make([]float64, b.Cols)
+		for j := 0; j < b.Cols; j++ {
+			sum := 0.0
+			for k := 0; k < a.Cols; k++ {
+				sum += a.Data[i][k] * b.Data[k][j]
+			}
+			result[i][j] = sum
+		}
+	}
+
+	return NewTensor(result)
+}
