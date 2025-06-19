@@ -106,6 +106,5 @@ func (a *Tensor) Dot(b *Tensor) (*Tensor, error) {
 			result[i][j] = sum
 		}
 	}
-
 	return NewTensor(result)
 }
